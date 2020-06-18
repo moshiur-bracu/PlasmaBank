@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "354892675029",
+    "firebase_url": "https://plasmabank-14dfa.firebaseio.com",
+    "project_id": "plasmabank-14dfa",
+    "storage_bucket": "plasmabank-14dfa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354892675029:android:db4cd7a25f481a1d27ef5c",
+        "android_client_info": {
+          "package_name": "com.example.PlasmaBank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354892675029-j3198uv1nsf16h3i6bgunhfuff7qovmi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.PlasmaBank",
+            "certificate_hash": "fc964fb37c1f41a1be95c3ca47e1ce6e9bc7e201"
+          }
+        },
+        {
+          "client_id": "354892675029-s106n29ea3jo7q6h9821iej17407ukml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrbTFCeb5kOyPSfL2heqdkF-Nl9XoLxdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354892675029-s106n29ea3jo7q6h9821iej17407ukml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
