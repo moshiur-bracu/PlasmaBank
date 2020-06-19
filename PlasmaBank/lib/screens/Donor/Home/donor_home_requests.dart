@@ -1,5 +1,4 @@
 import 'package:PlasmaBank/screens/Donor/Home/receiver_list.dart';
-import 'package:PlasmaBank/screens/Donor/Home/receiver_tile.dart';
 import 'package:PlasmaBank/shared/componets.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';

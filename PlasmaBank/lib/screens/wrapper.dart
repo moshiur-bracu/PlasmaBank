@@ -1,4 +1,5 @@
 import 'package:PlasmaBank/screens/Receiver/receiver_form.dart';
+import 'package:PlasmaBank/screens/home.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:PlasmaBank/screens/Donor/donor_provider.dart';
@@ -23,42 +24,85 @@ class _WrapperState extends State<Wrapper> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
-              onPressed: () {
-                setState(() {
-                  loading = true;
-                });
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DonorProvider()),
-                  );
-              },
-              child: Text('DONATE PLASMA'),
+            ButtonTheme(
+              minWidth: 200.0,
+              height: 35.0,
+              buttonColor: kSecondaryColor,
+                          child: RaisedButton(
+                onPressed: () {
+                  setState(() {
+                    loading = true;
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DonorProvider()),
+                    );
+                },
+                child: Text(
+                  'DONATE PLASMA',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  ),
+              ),
             ),
 
-            RaisedButton(
-              onPressed: () async {
-                setState(() {
-                  loading = true;
-                });
-                final ReceiverAuthService _auth = ReceiverAuthService();
-                dynamic result = await _auth.signInAnon();
-                  if(result == null) {
-                    setState(() {
-                      loading = false;
-                    });
-                    print('Error Signinig In');
+            ButtonTheme(
+              minWidth: 200.0,
+              height: 35.0,
+              buttonColor: kSecondaryColor,
+                          child: RaisedButton(
+                onPressed: () async {
+                  setState(() {
+                    loading = true;
+                  });
+                  final ReceiverAuthService _auth = ReceiverAuthService();
+                  dynamic result = await _auth.signInAnon();
+                    if(result == null) {
+                      setState(() {
+                        loading = false;
+                      });
+                      print('Error Signinig In');
+                    }
+                    else {
+                      print('Signed In');
+                      print(result.uid);
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ReceiverForm()),
+                    );
                   }
-                  else {
-                    print('Signed In');
-                    print(result.uid);
-                    Navigator.push(
+                },
+                child: Text(
+                  'NEED PLASMA',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  ),
+              ),
+            ),
+
+            ButtonTheme(
+              minWidth: 200.0,
+              height: 35.0,
+              buttonColor: kSecondaryColor,
+                          child: RaisedButton(
+                onPressed: () {
+                  setState(() {
+                    loading = true;
+                  });
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ReceiverForm()),
-                  );
-                }
-              },
-              child: Text('NEED PLASMA'),
+                    MaterialPageRoute(builder: (context) => Home()),
+                    );
+                },
+                child: Text(
+                  'BROWSE HOME',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  ),
+              ),
             ),
 
 

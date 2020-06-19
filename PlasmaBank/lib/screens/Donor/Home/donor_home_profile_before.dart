@@ -2,12 +2,12 @@ import 'package:PlasmaBank/screens/Donor/Home/donor_home_form.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';
 
-class DonorFormHomeBefore extends StatefulWidget {
+class DonorHomeProfileBefore extends StatefulWidget {
   @override
-  _DonorFormHomeBeforeState createState() => _DonorFormHomeBeforeState();
+  _DonorHomeProfileBeforeState createState() => _DonorHomeProfileBeforeState();
 }
 
-class _DonorFormHomeBeforeState extends State<DonorFormHomeBefore> {
+class _DonorHomeProfileBeforeState extends State<DonorHomeProfileBefore> {
   @override
   Widget build(BuildContext context) {
     return Container(

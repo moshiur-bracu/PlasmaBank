@@ -21,10 +21,6 @@ class DonorAuthService {
 
   //get database instance
   Future getDatabaseInstance(String uid) async{
-    /*await Firestore.instance.collection("Donor Lists").document(uid).get().then((value) {
-      print(value.data);
-      return value.data;
-    });*/
 
     final value = await Firestore.instance.collection('Donor Lists').document(uid).get();
     print(value.data);
@@ -52,7 +48,7 @@ class DonorAuthService {
 
       await DonorDatabaseService(uid: user.uid).updateUserData('name', 'email', 'contactNumber', 'city', 
       'bloodGroup', 'positiveDate', 'negativeDate', 'donationTimes', 'lastDonation', 
-      'newSymptoms', 'viralDiseases', 'pregnacyOrAbortion');
+      'newSymptoms', 'viralDiseases', 'pregnacyOrAbortion', 'notApproved');
 
       return _donorUserFromFirebaseUser(user);
     } catch (error) {

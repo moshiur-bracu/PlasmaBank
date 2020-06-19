@@ -1,16 +1,18 @@
-import 'package:PlasmaBank/screens/Donor/Home/donor_form_home_after.dart';
-import 'package:PlasmaBank/screens/Donor/Home/donor_form_home_before.dart';
+
+import 'package:PlasmaBank/screens/Donor/Home/donor_home_requests.dart';
+import 'package:PlasmaBank/screens/Donor/Home/donor_home_requests_before.dart';
 import 'package:PlasmaBank/screens/Donor/donor_user.dart';
+import 'package:PlasmaBank/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:PlasmaBank/services/donor_auth.dart';
 
-class DonorFormWrapper extends StatefulWidget {
+class DonorHomeRequestWrapper extends StatefulWidget {
   @override
-  _DonorFormWrapperState createState() => _DonorFormWrapperState();
+  _DonorHomeRequestWrapperState createState() => _DonorHomeRequestWrapperState();
 }
 
-class _DonorFormWrapperState extends State<DonorFormWrapper> {
+class _DonorHomeRequestWrapperState extends State<DonorHomeRequestWrapper> {
   @override
   Widget build(BuildContext context) {
     final DonorAuthService _auth = DonorAuthService();
@@ -19,14 +21,12 @@ class _DonorFormWrapperState extends State<DonorFormWrapper> {
         future: _auth.getDatabaseInstance(user.uid),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            if (snapshot.data['name'] == 'name') {
-              return DonorFormHomeBefore();
+            if (snapshot.data['approval'] == 'approved') {
+              return DonorRequests();
             }
-            return DonorFormHomeAfter();
+            return DonorRequestBefore();
           } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return Loading();
           }
         });
   }

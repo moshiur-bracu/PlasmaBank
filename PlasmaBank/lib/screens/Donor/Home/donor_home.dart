@@ -1,8 +1,6 @@
-import 'package:PlasmaBank/screens/Donor/Home/donor_form_home_after.dart';
-import 'package:PlasmaBank/screens/Donor/Home/donor_form_home_before.dart';
-import 'package:PlasmaBank/screens/Donor/Home/donor_form_wrapper.dart';
-import 'package:PlasmaBank/screens/Donor/Home/donor_home_profile.dart';
-import 'package:PlasmaBank/screens/Donor/Home/donor_home_requests.dart';
+import 'package:PlasmaBank/screens/Donor/Home/donor_home_profile_wrapper.dart';
+import 'package:PlasmaBank/screens/Donor/Home/donor_home_request_wrapper.dart';
+import 'package:PlasmaBank/screens/home.dart';
 import 'package:PlasmaBank/screens/wrapper.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +15,9 @@ class DonorHome extends StatelessWidget {
 
   List<Widget> _buildScreens() {
         return [
-        DonorRequests(),
-        DonorProfile(),
-        DonorFormWrapper(),
+          Home(),
+          DonorHomeRequestWrapper(),
+          DonorProfileWrapper()
         ];
   }
 
@@ -27,6 +25,12 @@ class DonorHome extends StatelessWidget {
         return [
         PersistentBottomNavBarItem(
             icon: Icon(CupertinoIcons.home),
+            title: ("Home"),
+            activeColor: CupertinoColors.activeBlue,
+            inactiveColor: CupertinoColors.systemGrey,
+        ),
+        PersistentBottomNavBarItem(
+            icon: Icon(CupertinoIcons.settings),
             title: ("Requests"),
             activeColor: CupertinoColors.activeBlue,
             inactiveColor: CupertinoColors.systemGrey,
@@ -34,12 +38,6 @@ class DonorHome extends StatelessWidget {
         PersistentBottomNavBarItem(
             icon: Icon(CupertinoIcons.settings),
             title: ("Profile"),
-            activeColor: CupertinoColors.activeBlue,
-            inactiveColor: CupertinoColors.systemGrey,
-        ),
-        PersistentBottomNavBarItem(
-            icon: Icon(CupertinoIcons.settings),
-            title: ("Form"),
             activeColor: CupertinoColors.activeBlue,
             inactiveColor: CupertinoColors.systemGrey,
         ),

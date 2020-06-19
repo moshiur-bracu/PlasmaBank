@@ -10,7 +10,7 @@ class DonorDatabaseService {
 
   Future updateUserData(String name, String email, String contactNumber, String city, 
   String bloodGroup, String positiveDate, String negativeDate, String donationTimes, 
-  String lastDonation, String newSymptoms, String viralDiseases, String pregnacyOrAbortion)
+  String lastDonation, String newSymptoms, String viralDiseases, String pregnacyOrAbortion, String approval)
   async {
     return await donorCollection.document(uid).setData({
       'name': name,
@@ -25,6 +25,7 @@ class DonorDatabaseService {
       'newSymptoms': newSymptoms,
       'viralDiseases': viralDiseases,
       'pregnancyOrAbortion': pregnacyOrAbortion,
+      'approval': approval,
     });
   }
 

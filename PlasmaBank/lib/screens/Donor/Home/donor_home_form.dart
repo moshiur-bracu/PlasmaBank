@@ -1,4 +1,4 @@
-import 'package:PlasmaBank/screens/Donor/Home/donor_form_home_after.dart';
+import 'package:PlasmaBank/screens/Donor/Home/donor_home_profile_after.dart';
 import 'package:PlasmaBank/services/database_donor.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:PlasmaBank/shared/loading.dart';
@@ -41,6 +41,7 @@ class _DonorFormState extends State<DonorForm> {
   String newSymptoms = '';
   String viralDiseases = '';
   String pregnancyOrAbortion = '';
+  String approval = 'notApproved';
 
   @override
   Widget build(BuildContext context) {
@@ -198,10 +199,11 @@ class _DonorFormState extends State<DonorForm> {
                   newSymptoms,
                   viralDiseases,
                   pregnancyOrAbortion,
+                  approval
                     );
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DonorFormHomeAfter()),
+                  MaterialPageRoute(builder: (context) => DonorHomeProfileAfter()),
                   );
                 }
               }
