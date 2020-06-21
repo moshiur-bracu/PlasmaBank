@@ -28,11 +28,12 @@ class _ReceiverTileState extends State<ReceiverTile> {
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: Card(
+        color: kTextLightColor,
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
           leading: CircleAvatar(
             radius: 25.0,
-            backgroundColor: Colors.red[800],
+            backgroundColor: bloodRed,
             child: Text(
               widget.receiverModel.bloodGroup,
               style: TextStyle(
@@ -52,7 +53,7 @@ class _ReceiverTileState extends State<ReceiverTile> {
                                     color: Colors.green,
                                     ) : 
                                     RaisedButton.icon(
-                                      color: kBlueColor,
+                                      color: kPrimaryColor,
                                       onPressed: () async {
                                         setState(() {
                                         isButtonPressed =!isButtonPressed;

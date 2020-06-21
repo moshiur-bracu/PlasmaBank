@@ -1,6 +1,6 @@
 import 'package:PlasmaBank/screens/Donor/Home/donor_home_profile_wrapper.dart';
 import 'package:PlasmaBank/screens/Donor/Home/donor_home_request_wrapper.dart';
-import 'package:PlasmaBank/screens/home.dart';
+import 'package:PlasmaBank/screens/Home/home.dart';
 import 'package:PlasmaBank/screens/wrapper.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class DonorHome extends StatelessWidget {
 
   List<Widget> _buildScreens() {
         return [
-          Home(),
+          HomeScreen(),
           DonorHomeRequestWrapper(),
           DonorProfileWrapper()
         ];
@@ -46,45 +46,47 @@ class DonorHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      backgroundColor: kPrimaryColor,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            elevation: 0,
-            centerTitle: false,
-            title: Text('PlasmaBank'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.notifications),
-              onPressed: () {},
+        backgroundColor: kPrimaryColor,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              elevation: 0,
+              centerTitle: false,
+              title: Text('PlasmaBank'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {},
+                ),
+              IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () async {
+                  await _auth.signOut();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Wrapper()),
+                      );
+                },
               ),
-            IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () async {
-                await _auth.signOut();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Wrapper()),
-                    );
-              },
-            ),
-          ],
-        ),
-            body: PersistentTabView(
-          controller: _controller,
-          items: _navBarsItems(),
-          screens: _buildScreens(),
-          showElevation: true,
-          navBarCurve: NavBarCurve.upperCorners,
-          confineInSafeArea: true,
-          handleAndroidBackButtonPress: true,
-          iconSize: 26.0,
-          navBarStyle: NavBarStyle.style6, // Choose the nav bar style with this property
-          onItemSelected: (index) {
-              print(index);
-          },
-          
-        ),      
+            ],
+          ),
+              body: PersistentTabView(
+            controller: _controller,
+            items: _navBarsItems(),
+            screens: _buildScreens(),
+            showElevation: true,
+            navBarCurve: NavBarCurve.upperCorners,
+            confineInSafeArea: true,
+            handleAndroidBackButtonPress: true,
+            iconSize: 26.0,
+            navBarStyle: NavBarStyle.style6, // Choose the nav bar style with this property
+            onItemSelected: (index) {
+                print(index);
+            },
+            
+          ),      
+      
     );
   }
 }

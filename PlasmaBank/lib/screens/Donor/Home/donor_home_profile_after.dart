@@ -19,12 +19,15 @@ class _DonorHomeProfileAfterState extends State<DonorHomeProfileAfter> {
     return Scaffold(
       backgroundColor: kPrimaryColor,
       body: Center(
-        child: Text(
-          'We received your application. We will notify you soon when your account will be ready and you can start donating Plasma',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Text(
+            'We received your application. We will notify you soon when your account will be ready and you can start donating Plasma',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+            ),
+        ),
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:PlasmaBank/screens/Receiver/receiver_form.dart';
-import 'package:PlasmaBank/screens/home.dart';
+import 'package:PlasmaBank/screens/Home/home.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:PlasmaBank/screens/Donor/donor_provider.dart';
@@ -15,10 +15,31 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   
   bool loading = false;
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to exit an App'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('No'),
+          ),
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: new Text('Yes'),
+          ),
+        ],
+      ),
+    )) ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: loading ? Loading() : Scaffold(
       backgroundColor: kPrimaryColor,
       body: Center(
         child: Column(
@@ -93,7 +114,7 @@ class _WrapperState extends State<Wrapper> {
                   });
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Home()),
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
                     );
                 },
                 child: Text(
@@ -109,6 +130,7 @@ class _WrapperState extends State<Wrapper> {
           ],
         ),
       ),
+    ),
     );
   }
 }

@@ -46,4 +46,14 @@ class ReceiverDatabaseService {
     .map(_receiverListFromSnapshot);
   }
 
+  Stream<List<ReceiverModel>> fetchReceiversBloodGroups(String bloodGroup) {
+    return receiverCollection.where('bloodGroup', isEqualTo: bloodGroup)
+           .snapshots().map(_receiverListFromSnapshot);
+  }
+
+  Stream<List<ReceiverModel>> fetchReceiversCities(String city) {
+    return receiverCollection.where('city', isEqualTo: city)
+           .snapshots().map(_receiverListFromSnapshot);
+  }
+
 }
