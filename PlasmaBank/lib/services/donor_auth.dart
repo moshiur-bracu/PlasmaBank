@@ -23,7 +23,7 @@ class DonorAuthService {
   Future getDatabaseInstance(String uid) async{
 
     final value = await Firestore.instance.collection('Donor Lists').document(uid).get();
-    print(value.data);
+    //print(value.data);
     return value.data;
     
   }

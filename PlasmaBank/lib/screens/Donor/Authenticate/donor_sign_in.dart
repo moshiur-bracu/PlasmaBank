@@ -1,3 +1,4 @@
+import 'package:PlasmaBank/screens/wrapper.dart';
 import 'package:PlasmaBank/services/donor_auth.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:PlasmaBank/shared/loading.dart';
@@ -25,7 +26,11 @@ class _DonorSignInState extends State<DonorSignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
+    return WillPopScope(
+            onWillPop: () {
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Wrapper()), (route) => false);
+          return Future.value(false);
+            }, child: loading ? Loading() : Scaffold(
       backgroundColor: kPrimaryColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -97,6 +102,7 @@ class _DonorSignInState extends State<DonorSignIn> {
           ),
         ),
       ),
+            ),
     );
   }
 }

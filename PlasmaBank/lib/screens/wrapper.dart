@@ -75,24 +75,13 @@ class _WrapperState extends State<Wrapper> {
                           child: RaisedButton(
                 onPressed: () async {
                   setState(() {
-                    loading = true;
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ReceiverForm()),
+                  );
+
                   });
-                  final ReceiverAuthService _auth = ReceiverAuthService();
-                  dynamic result = await _auth.signInAnon();
-                    if(result == null) {
-                      setState(() {
-                        loading = false;
-                      });
-                      print('Error Signinig In');
-                    }
-                    else {
-                      print('Signed In');
-                      print(result.uid);
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ReceiverForm()),
-                    );
-                  }
+                  
                 },
                 child: Text(
                   'NEED PLASMA',

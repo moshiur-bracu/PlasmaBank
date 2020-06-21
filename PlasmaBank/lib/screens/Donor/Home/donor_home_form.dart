@@ -6,6 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+import 'package:path/path.dart' as p;
 
 
 class DonorForm extends StatefulWidget {
@@ -28,23 +34,64 @@ class _DonorFormState extends State<DonorForm> {
   String error = '';
   bool loading = false;
 
+  String fileType = '';
+  File file;
+  String fileName = '';
+  String operationText = '';
+  bool isUploaded = true;
+  String result = '';
+
+  String _currentId;
+
+
   // text field state
-  String name = '';
-  String email = '';
-  String contactNumber = '';
-  String city;
-  String bloodGroup;
-  String positiveDate = '';
-  String negativeDate = '';
-  String donationTimes = '';
-  String lastDonation = '';
-  String newSymptoms = '';
-  String viralDiseases = '';
-  String pregnancyOrAbortion = '';
+  String name = 'name';
+  String email = 'email';
+  String contactNumber = 'contactNumber';
+  String city = 'Dhaka';
+  String bloodGroup = "A+";
+  String positiveDate = 'positiveDate';
+  String negativeDate = 'negativeDate';
+  String donationTimes = 'donationTimes';
+  String lastDonation = 'lastDonation';
+  String newSymptoms = 'newSymptoms';
+  String viralDiseases = 'viralDsiseases';
+  String pregnancyOrAbortion = 'pregnancyOrAbortion';
   String approval = 'notApproved';
 
   @override
   Widget build(BuildContext context) {
+
+    Future filePicker(BuildContext context) async {
+    try {
+      if (fileType == 'image') {
+        file = await FilePicker.getFile(type: FileType.image);
+        setState(() {
+          fileName = p.basename(file.path);
+        });
+        print(fileName);
+      }
+    } on PlatformException catch (e) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Sorry...'),
+              content: Text('Unsupported exception: $e'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          }
+        );
+    }
+  }
+
     return loading ? Loading() : Scaffold(
       backgroundColor: kPrimaryColor,
       appBar: AppBar(
@@ -156,6 +203,14 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'Number of previous Donations'),
+                  //validator: (val) => val.isEmpty ? 'Viral Diseases' : null,
+                  onChanged: (valDOn) {
+                    setState(() => donationTimes = valDOn);
+                  },
+                ),
+                SizedBox(height: 20.0),
+                TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Any Recent Viral Diseases'),
                   //validator: (val) => val.isEmpty ? 'Viral Diseases' : null,
                   onChanged: (valDis) {
@@ -171,6 +226,26 @@ class _DonorFormState extends State<DonorForm> {
                   },
                 ),
                 SizedBox(height: 20.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'New Symmptoms'),
+                  //validator: (val) => val.isEmpty ? 'Viral Diseases' : null,
+                  onChanged: (valSym) {
+                    setState(() => newSymptoms = valSym);
+                  },
+                ),
+                SizedBox(height: 20.0),
+                ListTile(
+                  title: Text('Upload Image of Corona Negative Certificate', style: TextStyle(color: Colors.white),),
+                  leading: Icon(Icons.image, color: Colors.white,),
+                  onTap: () {
+                    setState(() {
+                      fileType = 'image';
+                    });
+                  filePicker(context);
+                  },
+                  ),
+                  SizedBox(height: 20.0),
+          
                 RaisedButton(
                   color: Colors.pink[400],
                   child: Text(
@@ -186,6 +261,7 @@ class _DonorFormState extends State<DonorForm> {
                       loading = true;
                     });
                   final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                  _currentId = user.uid;
                   await DonorDatabaseService(uid: user.uid).updateUserData(
                   name,
                   email,
@@ -201,6 +277,19 @@ class _DonorFormState extends State<DonorForm> {
                   pregnancyOrAbortion,
                   approval
                     );
+
+                   StorageReference storageReference;
+                        if (fileType == 'image') {
+                        storageReference = 
+                        FirebaseStorage.instance.ref().child("images/Donors/$_currentId/$fileName");
+                        }
+                        final StorageUploadTask uploadTask = storageReference.putFile(file);
+                        final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
+                        final String url = (await downloadUrl.ref.getDownloadURL());
+                        print("URL is $url");
+                        
+                        
+
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DonorHomeProfileAfter()),

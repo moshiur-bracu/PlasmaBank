@@ -47,7 +47,12 @@ class DonorHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return WillPopScope(
+            onWillPop: () {
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Wrapper()), (route) => false);
+          return Future.value(false);
+            }, 
+    child: Scaffold(
         backgroundColor: kPrimaryColor,
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -86,7 +91,7 @@ class DonorHome extends StatelessWidget {
             },
             
           ),      
-      
+    ),
     );
   }
 }
