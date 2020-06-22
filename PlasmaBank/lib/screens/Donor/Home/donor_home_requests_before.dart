@@ -7,11 +7,14 @@ class DonorRequestBefore extends StatelessWidget {
     return Scaffold(
       backgroundColor: kPrimaryColor,
       body: Center(
-        child: Text(
-          'You are not authorized to view this page',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(
+            'You are not authorized to view this page. Please go to Profile Page to create e new donor.',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+            ),
           ),
         ),
       ),

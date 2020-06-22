@@ -118,6 +118,7 @@ class _ReceiverFormState extends State<ReceiverForm> {
                   TextFormField(
                     maxLines: 1,
                     autofocus: false,
+                    keyboardType: TextInputType.number,
                     decoration: textInputDecoration.copyWith(hintText: 'Contact Number'),
                     validator: (val) => val.isEmpty ? 'Contact Number' : null,
                     onChanged: (val) => setState(() => _currentContactNumber = val),
@@ -158,61 +159,68 @@ class _ReceiverFormState extends State<ReceiverForm> {
                   },
                   ),
               SizedBox(height: 10.0),
-                  RaisedButton(
-                    color: Colors.pink[400],
-                    child: Text(
-                      'SUBMIT',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      if(_formKey.currentState.validate()) {
-                        setState(() {
-                          loading = true;
-                        });
-                        final ReceiverAuthService _auth = ReceiverAuthService();
-                        dynamic result = await _auth.signInAnon();
-                        if(result == null) {
+                  SizedBox(
+                    width: 300,
+                    height: 40,
+                                      child: RaisedButton(
+                      elevation: 5.0,
+                    shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)),
+                      color: kSecondaryColor,
+                      child: Text(
+                        'SUBMIT',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async {
+                        if(_formKey.currentState.validate()) {
                           setState(() {
-                            loading = false;
+                            loading = true;
                           });
-                          print('Error Signinig In');
-                        }
-                        else {
-                          print('Signed In');
-                          print(result.uid);
-                          _currentAccepted = 'false';
-                        final FirebaseUser user = await FirebaseAuth.instance.currentUser();
-                        _currentId = user.uid;
+                          final ReceiverAuthService _auth = ReceiverAuthService();
+                          dynamic result = await _auth.signInAnon();
+                          if(result == null) {
+                            setState(() {
+                              loading = false;
+                            });
+                            print('Error Signinig In');
+                          }
+                          else {
+                            print('Signed In');
+                            print(result.uid);
+                            _currentAccepted = 'false';
+                          final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                          _currentId = user.uid;
 
-                        await ReceiverDatabaseService(uid: user.uid).updateUserData(
-                        _currentId,
-                        _currentName,
-                        _currentContactNumber,
-                        _currentBloodGroup,
-                        _currentCity,
-                        _currentAccepted,
+                          await ReceiverDatabaseService(uid: user.uid).updateUserData(
+                          _currentId,
+                          _currentName,
+                          _currentContactNumber,
+                          _currentBloodGroup,
+                          _currentCity,
+                          _currentAccepted,
+                            );
+
+                          
+                          StorageReference storageReference;
+                          if (fileType == 'image') {
+                          storageReference = 
+                          FirebaseStorage.instance.ref().child("images/Receivers/$_currentId/$fileName");
+                          }
+                          final StorageUploadTask uploadTask = storageReference.putFile(file);
+                          final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
+                          final String url = (await downloadUrl.ref.getDownloadURL());
+                          print("URL is $url");
+                          
+
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ReceiverHome()),
                           );
-
-                        
-                        StorageReference storageReference;
-                        if (fileType == 'image') {
-                        storageReference = 
-                        FirebaseStorage.instance.ref().child("images/Receivers/$_currentId/$fileName");
                         }
-                        final StorageUploadTask uploadTask = storageReference.putFile(file);
-                        final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
-                        final String url = (await downloadUrl.ref.getDownloadURL());
-                        print("URL is $url");
-                        
-
-                        Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReceiverHome()),
-                        );
+                          
+                        }
                       }
-                        
-                      }
-                    }
+                    ),
                   ),
                 ],
             ),

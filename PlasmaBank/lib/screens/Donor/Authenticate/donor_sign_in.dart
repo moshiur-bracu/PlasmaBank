@@ -54,11 +54,14 @@ class _DonorSignInState extends State<DonorSignIn> {
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
           key: _formKey,
-          child: Column(
+          child: ListView(
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                maxLines: 1,
+                autofocus: false,
+                keyboardType: TextInputType.emailAddress,
+                decoration: textInputDecoration.copyWith(hintText: 'Email', icon: Icon(Icons.mail, color: Colors.white,)),
                 validator: (val) => val.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
                   setState(() => email = val);
@@ -66,21 +69,24 @@ class _DonorSignInState extends State<DonorSignIn> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                maxLines: 1,
+                autofocus: false,
+                keyboardType: TextInputType.emailAddress,
+                decoration: textInputDecoration.copyWith(hintText: 'Password', icon: Icon(Icons.lock, color: Colors.white,)),
                 obscureText: true,
-                decoration: textInputDecoration.copyWith(hintText: 'Password'),
                 validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
                 onChanged: (val) {
                   setState(() => password = val);
                 },
               ),
               SizedBox(height: 20.0),
-              RaisedButton(
-                color: kSecondaryColor,
-                child: Text(
-                  'Sign In',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () async {
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
+                child: SizedBox(
+                height: 40.0,
+                width: 300.0,
+                child: new RaisedButton(
+                  onPressed: () async {
                   if(_formKey.currentState.validate()){
                     setState(() => loading = true);
                     dynamic result = await _auth.signInWithEmailAndPassword(email, password);
@@ -91,8 +97,17 @@ class _DonorSignInState extends State<DonorSignIn> {
                       });
                     }
                   }
-                }
+                },
+                  elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
+                  color: kSecondaryColor,
+                  child: new Text('Login',
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+                  ),
+                  ),
               ),
+              SizedBox(height: 20.0),
               SizedBox(height: 12.0),
               Text(
                 error,

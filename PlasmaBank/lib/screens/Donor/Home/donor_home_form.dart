@@ -116,6 +116,9 @@ class _DonorFormState extends State<DonorForm> {
               children: <Widget>[
                 SizedBox(height: 20.0),
                 TextFormField(
+                  keyboardType: TextInputType.text,
+                  maxLines: 1,
+                  autofocus: false,
                   decoration: textInputDecoration.copyWith(hintText: 'Name'),
                   validator: (valN) => valN.isEmpty ? 'Enter your name' : null,
                   onChanged: (valN) {
@@ -124,6 +127,9 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  maxLines: 1,
+                  autofocus: false,
                   decoration: textInputDecoration.copyWith(hintText: 'email'),
                   validator: (valE) => valE.isEmpty ? 'Enter your email' : null,
                   onChanged: (valE) {
@@ -132,6 +138,9 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  keyboardType: TextInputType.phone,
+                  maxLines: 1,
+                  autofocus: false,
                   decoration: textInputDecoration.copyWith(hintText: 'Contact Number'),
                   validator: (valC) => valC.isEmpty ? 'Enter your number' : null,
                   onChanged: (valC) {
@@ -164,6 +173,7 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 DateTimeField(
+                  autofocus: false,
                   format: format,
                   decoration: textInputDecoration.copyWith(hintText: 'Date of became positive'),
                   onShowPicker: (context, currentValue) {
@@ -177,6 +187,7 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 DateTimeField(
+                  autofocus: false,
                   format: format,
                   decoration: textInputDecoration.copyWith(hintText: 'Date of became negative'),
                   onShowPicker: (context, currentValue) {
@@ -190,6 +201,7 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 DateTimeField(
+                  autofocus: false,
                   format: format,
                   decoration: textInputDecoration.copyWith(hintText: 'Date of last donation'),
                   onShowPicker: (context, currentValue) {
@@ -203,6 +215,9 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  keyboardType: TextInputType.number,
+                  maxLines: 1,
+                  autofocus: false,
                   decoration: textInputDecoration.copyWith(hintText: 'Number of previous Donations'),
                   //validator: (val) => val.isEmpty ? 'Viral Diseases' : null,
                   onChanged: (valDOn) {
@@ -211,6 +226,8 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
                   decoration: textInputDecoration.copyWith(hintText: 'Any Recent Viral Diseases'),
                   //validator: (val) => val.isEmpty ? 'Viral Diseases' : null,
                   onChanged: (valDis) {
@@ -219,6 +236,9 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  keyboardType: TextInputType.text,
+                  maxLines: 1,
+                  autofocus: false,
                   decoration: textInputDecoration.copyWith(hintText: 'Pregnancy or abortion'),
                   //validator: (val) => val.isEmpty ? 'Viral Diseases' : null,
                   onChanged: (valPreg) {
@@ -227,6 +247,8 @@ class _DonorFormState extends State<DonorForm> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
                   decoration: textInputDecoration.copyWith(hintText: 'New Symmptoms'),
                   //validator: (val) => val.isEmpty ? 'Viral Diseases' : null,
                   onChanged: (valSym) {

@@ -22,9 +22,13 @@ class DonorAuthService {
   //get database instance
   Future getDatabaseInstance(String uid) async{
 
-    final value = await Firestore.instance.collection('Donor Lists').document(uid).get();
+    try { final value = await Firestore.instance.collection('Donor Lists').document(uid).get();
     //print(value.data);
     return value.data;
+    } catch (error) {
+      print(error.toString());
+      return null;
+    }
     
   }
 

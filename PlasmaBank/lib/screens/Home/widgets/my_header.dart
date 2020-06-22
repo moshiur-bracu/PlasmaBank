@@ -1,5 +1,4 @@
 import 'package:PlasmaBank/shared/constants.dart';
-import 'package:PlasmaBank/screens/Home/info_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyHeader extends StatefulWidget {
@@ -40,32 +39,10 @@ class _MyHeaderState extends State<MyHeader> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return InfoScreen();
-                    },
-                  ),
-                );
-              },
-              child: Icon(Icons.menu),
-            ),
             SizedBox(height: 20),
             Expanded(
               child: Stack(
                 children: <Widget>[
-                  /*Positioned(
-                    top: (widget.offset < 0) ? 0 : widget.offset,
-                    child: SvgPicture.asset(
-                      widget.image,
-                      width: 230,
-                      fit: BoxFit.fitWidth,
-                      alignment: Alignment.topCenter,
-                    ),
-                  ),*/
                   Positioned(
                     top: 20 - widget.offset / 2,
                     left: 150,

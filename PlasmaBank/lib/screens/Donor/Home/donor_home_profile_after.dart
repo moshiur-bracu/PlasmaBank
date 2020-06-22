@@ -20,11 +20,12 @@ class _DonorHomeProfileAfterState extends State<DonorHomeProfileAfter> {
       backgroundColor: kPrimaryColor,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(20.0),
           child: Text(
             'We received your application. We will notify you soon when your account will be ready and you can start donating Plasma',
             style: TextStyle(
               color: Colors.white,
+              fontSize: 20.0
             ),
             ),
         ),

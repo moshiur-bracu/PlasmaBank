@@ -24,10 +24,14 @@ class ReceiverHome extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
           child: Column(
             children: <Widget>[
-              Text('Your request has been accepted. Now wait for a donor to get back to you soon',
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text('Your request has been accepted. Now wait for a donor to get back to you soon.',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0
+                ),
+                ),
               ),
               SizedBox(height: 20.0),
               RaisedButton(

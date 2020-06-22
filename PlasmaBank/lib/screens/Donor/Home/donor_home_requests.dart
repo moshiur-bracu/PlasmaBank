@@ -88,24 +88,35 @@ class _DonorRequestsState extends State<DonorRequests> {
                   ),
                 ],
               ),
-              RaisedButton(
-                color: kSecondaryColor,
-                onPressed: () { 
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
+                child: SizedBox(
+                height: 40.0,
+                width: 300.0,
+                child: new RaisedButton(
+                  onPressed: () { 
                   setState(() {
                     search = true;
                     city = null;
                     bloodGroup = null;
                   });
                 },
-                child: Text('Reset Filters'),
+                  elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
+                  color: kSecondaryColor,
+                  child: new Text('Reset Filters',
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+                  ),
+                  ),
               ),
               Expanded(
                 child: Stack(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(top: 70),
+                      margin: EdgeInsets.only(top: 0.0),
                       decoration: BoxDecoration(
-                        color: kBackgroundColor,
+                        color: bloodRed,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40),
                           topRight: Radius.circular(40),

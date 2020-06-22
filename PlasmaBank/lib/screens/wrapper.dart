@@ -47,9 +47,12 @@ class _WrapperState extends State<Wrapper> {
           children: <Widget>[
             ButtonTheme(
               minWidth: 200.0,
-              height: 35.0,
+              height: 45.0,
               buttonColor: kSecondaryColor,
                           child: RaisedButton(
+                            elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
                 onPressed: () {
                   setState(() {
                     loading = true;
@@ -67,12 +70,15 @@ class _WrapperState extends State<Wrapper> {
                   ),
               ),
             ),
-
+SizedBox(height: 10.0,),
             ButtonTheme(
               minWidth: 200.0,
-              height: 35.0,
+              height: 45.0,
               buttonColor: kSecondaryColor,
                           child: RaisedButton(
+                            elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
                 onPressed: () async {
                   setState(() {
                     Navigator.push(
@@ -91,12 +97,15 @@ class _WrapperState extends State<Wrapper> {
                   ),
               ),
             ),
-
+SizedBox(height: 10.0,),
             ButtonTheme(
               minWidth: 200.0,
-              height: 35.0,
+              height: 45.0,
               buttonColor: kSecondaryColor,
                           child: RaisedButton(
+                            elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
                 onPressed: () {
                   setState(() {
                     loading = true;

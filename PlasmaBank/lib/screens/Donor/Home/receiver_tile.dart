@@ -28,7 +28,9 @@ class _ReceiverTileState extends State<ReceiverTile> {
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: Card(
-        color: kTextLightColor,
+        shape: new RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(20.0)),
+        color: Colors.white,
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
           leading: CircleAvatar(
@@ -37,24 +39,26 @@ class _ReceiverTileState extends State<ReceiverTile> {
             child: Text(
               widget.receiverModel.bloodGroup,
               style: TextStyle(
-                color: Colors.white
+                color: Colors.white,
+                fontSize: 25.0,
                 ),
             ),
           ),
           title: Text(widget.receiverModel.name),
           subtitle: Text(widget.receiverModel.contactNumber),
-          trailing: buttonChange ? RaisedButton.icon(
-                                    onPressed: () async {
+          trailing: buttonChange ? RaisedButton(
+                  onPressed: () async {
                                       await _makePhoneCall(widget.receiverModel.contactNumber);
                                       Firestore.instance.collection('Plasma Requests').document(widget.receiverModel.id).delete();
                                     }, 
-                                    icon: Icon(Icons.call), 
-                                    label: Text('Call'),
-                                    color: Colors.green,
-                                    ) : 
-                                    RaisedButton.icon(
-                                      color: kPrimaryColor,
-                                      onPressed: () async {
+                  elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
+                  color: kSecondaryColor,
+                  child: new Text('Call',
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+                  ) : RaisedButton(
+                  onPressed: () async {
                                         setState(() {
                                         isButtonPressed =!isButtonPressed;
                                         buttonChange = true;
@@ -63,10 +67,14 @@ class _ReceiverTileState extends State<ReceiverTile> {
                                       accepted = 'true';
                                       await ReceiverDatabaseService(uid: widget.receiverModel.id).updateUserDataAccepted(accepted);
                                       }, 
-                                      icon: Icon(Icons.check), 
-                                      label: Text('Accept'),
-                                      ),
-          isThreeLine: true,
+                  elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
+                  color: kRecovercolor,
+                  child: new Text('Accept',
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+                  ),
+                  isThreeLine: true,
         ),
       ),
     );
