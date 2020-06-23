@@ -1,12 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseHome {
+ 
+    Map<String, dynamic> coronaUpdates = {};
 
-  final CollectionReference homeCollection = Firestore.instance.collection('Home');
+    Future<Null> getCoronaUpdate() async {
+    await Firestore.instance
+        .collection('Home') // Your Collections Name
+        .document('Corona Updates')  // Your user Document Name
+        .get().then((val) {
+      coronaUpdates.addAll(val.data);
 
-  //get homeCollection stream
-  Stream<QuerySnapshot> get coronaUpdate {
-    return homeCollection.snapshots();
+      return coronaUpdates;
+    }
+    
+    );
   }
 
 }
+

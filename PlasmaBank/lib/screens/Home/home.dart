@@ -1,6 +1,9 @@
+import 'package:PlasmaBank/screens/Donor/Home/donor_home_request_wrapper.dart';
 import 'package:PlasmaBank/screens/Home/widgets/bangladesh.dart';
 import 'package:PlasmaBank/screens/wrapper.dart';
 import 'package:PlasmaBank/shared/constants.dart';
+import 'package:PlasmaBank/shared/loading.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:PlasmaBank/screens/Home/widgets/counter.dart';
 import 'package:PlasmaBank/screens/Home/widgets/my_header.dart';
@@ -35,26 +38,34 @@ class _HomeScreenState extends State<HomeScreen> {
       offset = (controller.hasClients) ? controller.offset : 0;
     });
   }
+  Future<DocumentSnapshot> corona = 
+    Firestore.instance.collection('Home')
+    .document('Corona Updates')
+    .get();
+    
+
+  
 
   @override
   Widget build(BuildContext context) {
 
-    /*Api api = Api();
-    Future response = api.makeGetRequest();
-    final jsonString = response.toString();
-    final jsonResponse = json.decode(jsonString);
-    Info info = new Info.fromJson(jsonResponse);
-    print(info.summary[4][1]);
-*/  //Api api = Api();
-    //api.makeGetRequest();
-
+    
     return Scaffold(
       body: WillPopScope(
         onWillPop: () {
          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Wrapper()), (route) => false);
           return Future.value(false);
         },
-              child: SingleChildScrollView(
+       child: StreamBuilder(
+         stream: Firestore.instance
+                .collection('Home')
+                .document('Corona Updates')
+                .snapshots(),
+         builder: (context, snapshot) {
+
+           if(snapshot.hasData) {
+             var corona = snapshot.data;
+             return SingleChildScrollView(
           controller: controller,
           child: Column(
             children: <Widget>[
@@ -134,17 +145,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: <Widget>[
                           Counter(
                             color: kInfectedColor,
-                            number: 1046,
+                            number: corona['affected'],
                             title: "Infected",
                           ),
                           Counter(
                             color: kDeathColor,
-                            number: 87,
+                            number: corona['death'],
                             title: "Deaths",
                           ),
                           Counter(
                             color: kRecovercolor,
-                            number: 46,
+                            number: corona['recovered'],
                             title: "Recovered",
                           ),
                         ],
@@ -192,17 +203,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: <Widget>[
                           Counter(
                             color: kInfectedColor,
-                            number: 1046,
+                            number: corona['totalAffected'],
                             title: "Infected",
                           ),
                           Counter(
                             color: kDeathColor,
-                            number: 87,
+                            number: corona['totalDeath'],
                             title: "Deaths",
                           ),
                           Counter(
                             color: kRecovercolor,
-                            number: 46,
+                            number: corona['totalRecovered'],
                             title: "Recovered",
                           ),
                         ],
@@ -256,7 +267,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-        ),
+        );
+           }
+           else {
+             return Loading();
+           }
+            
+         }
+         
+         ),
       ),
     );
   }

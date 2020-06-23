@@ -2,7 +2,7 @@ import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class Counter extends StatelessWidget {
-  final int number;
+  final String number;
   final Color color;
   final String title;
   const Counter({
