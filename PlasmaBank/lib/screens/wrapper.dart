@@ -3,7 +3,6 @@ import 'package:PlasmaBank/screens/Home/home.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:PlasmaBank/screens/Donor/donor_provider.dart';
-import 'package:PlasmaBank/services/receiver_auth.dart';
 import 'package:PlasmaBank/shared/loading.dart';
 
 class Wrapper extends StatefulWidget {
@@ -110,6 +109,7 @@ SizedBox(height: 10.0,),
                   setState(() {
                     loading = true;
                   });
+                  
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => HomeScreen()),

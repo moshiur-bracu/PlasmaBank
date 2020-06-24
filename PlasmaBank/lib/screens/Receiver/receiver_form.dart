@@ -210,6 +210,8 @@ class _ReceiverFormState extends State<ReceiverForm> {
                           final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
                           final String url = (await downloadUrl.ref.getDownloadURL());
                           print("URL is $url");
+
+                          //await ReceiverDatabaseService().saveDeviceToken(_currentId);
                           
 
                           Navigator.push(

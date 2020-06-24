@@ -1,14 +1,29 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:PlasmaBank/services/database_donor.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:PlasmaBank/screens/Donor/donor_user.dart';
 import 'package:PlasmaBank/screens/Donor/Authenticate/donor_authenticate.dart';
 import 'package:PlasmaBank/screens/Donor/Home/donor_home.dart';
 
-class DonorWrapper extends StatelessWidget {
+class DonorWrapper extends StatefulWidget {
+  @override
+  _DonorWrapperState createState() => _DonorWrapperState();
+}
+
+class _DonorWrapperState extends State<DonorWrapper> {
+
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<DonorUser>(context);
     print(user);
+
+    
     
     // return either the Home or Authenticate widget
     if (user == null){

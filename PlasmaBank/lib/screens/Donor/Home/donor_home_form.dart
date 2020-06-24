@@ -300,6 +300,8 @@ class _DonorFormState extends State<DonorForm> {
                   approval
                     );
 
+                     await DonorDatabaseService().saveDeviceToken(_currentId);
+
                    StorageReference storageReference;
                         if (fileType == 'image') {
                         storageReference = 
@@ -310,7 +312,7 @@ class _DonorFormState extends State<DonorForm> {
                         final String url = (await downloadUrl.ref.getDownloadURL());
                         print("URL is $url");
                         
-                        
+                        await DonorDatabaseService().saveDeviceToken(_currentId);
 
                   Navigator.push(
                   context,
