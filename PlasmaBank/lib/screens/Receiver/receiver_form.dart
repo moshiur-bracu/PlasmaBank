@@ -13,6 +13,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ReceiverForm extends StatefulWidget {
   @override
@@ -176,7 +177,27 @@ class _ReceiverFormState extends State<ReceiverForm> {
                           setState(() {
                             loading = true;
                           });
-                          final ReceiverAuthService _auth = ReceiverAuthService();
+                          
+
+                          try{StorageReference storageReference;
+                          if (fileType == 'image') {
+                          storageReference = 
+                          FirebaseStorage.instance.ref().child("images/Receivers/$_currentId/$fileName");
+                          }
+                          if(file == null){
+                            setState(() {
+                              loading = false;
+                            });
+                            Fluttertoast.showToast(msg: 'Uplaod an image');
+                            Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ReceiverForm()),
+                          );
+                            
+                          }
+                          else {
+
+                            final ReceiverAuthService _auth = ReceiverAuthService();
                           dynamic result = await _auth.signInAnon();
                           if(result == null) {
                             setState(() {
@@ -187,10 +208,14 @@ class _ReceiverFormState extends State<ReceiverForm> {
                           else {
                             print('Signed In');
                             print(result.uid);
-                            _currentAccepted = 'false';
+                            _currentAccepted = 'false';                          
+                          }
                           final FirebaseUser user = await FirebaseAuth.instance.currentUser();
                           _currentId = user.uid;
-
+                          final StorageUploadTask uploadTask = storageReference.putFile(file);
+                          final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
+                          final String url = (await downloadUrl.ref.getDownloadURL());
+                          print("URL is $url");
                           await ReceiverDatabaseService(uid: user.uid).updateUserData(
                           _currentId,
                           _currentName,
@@ -199,26 +224,26 @@ class _ReceiverFormState extends State<ReceiverForm> {
                           _currentCity,
                           _currentAccepted,
                             );
-
-                          
-                          StorageReference storageReference;
-                          if (fileType == 'image') {
-                          storageReference = 
-                          FirebaseStorage.instance.ref().child("images/Receivers/$_currentId/$fileName");
-                          }
-                          final StorageUploadTask uploadTask = storageReference.putFile(file);
-                          final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
-                          final String url = (await downloadUrl.ref.getDownloadURL());
-                          print("URL is $url");
-
-                          //await ReceiverDatabaseService().saveDeviceToken(_currentId);
-                          
-
                           Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => ReceiverHome()),
                           );
-                        }
+                          }
+                          }
+                          catch(e) {
+                            print(e.toString());
+                          }
+
+                          
+
+                          
+                          
+
+                          //await ReceiverDatabaseService().saveDeviceToken(_currentId);
+                          
+
+                          
+                        
                           
                         }
                       }

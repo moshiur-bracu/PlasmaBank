@@ -12,6 +12,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class DonorForm extends StatefulWidget {
@@ -282,7 +283,28 @@ class _DonorFormState extends State<DonorForm> {
                     setState(() {
                       loading = true;
                     });
-                  final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                  try { 
+                    
+                    StorageReference storageReference;
+                          if (fileType == 'image') {
+                          storageReference = 
+                          FirebaseStorage.instance.ref().child("images/Donors/$_currentId/$fileName");
+                          }
+                          if(file == null){
+                            setState(() {
+                              loading = false;
+                            });
+                            Fluttertoast.showToast(msg: 'Uplaod an image');
+                            Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DonorForm()),
+                          );
+                            
+                          }
+
+                          else {
+
+                            final FirebaseUser user = await FirebaseAuth.instance.currentUser();
                   _currentId = user.uid;
                   await DonorDatabaseService(uid: user.uid).updateUserData(
                   name,
@@ -300,26 +322,22 @@ class _DonorFormState extends State<DonorForm> {
                   approval
                     );
 
-                     await DonorDatabaseService().saveDeviceToken(_currentId);
-
-                   StorageReference storageReference;
-                        if (fileType == 'image') {
-                        storageReference = 
-                        FirebaseStorage.instance.ref().child("images/Donors/$_currentId/$fileName");
-                        }
-                        final StorageUploadTask uploadTask = storageReference.putFile(file);
-                        final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
-                        final String url = (await downloadUrl.ref.getDownloadURL());
-                        print("URL is $url");
-                        
-                        await DonorDatabaseService().saveDeviceToken(_currentId);
-                        await DonorDatabaseService.sendNotification(_currentId);
+                    await DonorDatabaseService().saveDeviceToken(_currentId);                   
+                    await DonorDatabaseService.sendNotification(_currentId);
 
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DonorHomeProfileAfter()),
                   );
+
+                          }
+                    
+                    
+                  } catch (e) {
+                    print(e.toString());
+                  }
                 }
+                  
               }
                 ),
                 SizedBox(height: 12.0),
