@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DonorDatabaseService {
 
@@ -62,6 +64,73 @@ if (fcmToken != null) {
 }
 
 }
+
+static Future<void> sendNotification(receiver) async {
+
+    String token = 'eB-O2UCiSNmFn4JzV-Uz34:APA91bHvQ7mqxzID8qQ_47y7oZ1ndkqROOS1O4pJTqlXkY4xtQwVSZDcPeQ-vmfsI21m7OnV7gJ77tgOYP5BI1IsID_dcTsmnU0YTA2zuTwWrnbg851JscaTRU6xfgY_namKaiBPghqM';
+    print('token : $token');
+
+    final data = {
+      "notification": {"body": "Please approve the request", "title": "New Donor Request"},
+      "priority": "high",
+      "data": {
+        "click_action": "FLUTTER_NOTIFICATION_CLICK",
+        "id": "1",
+        "status": "done"
+      },
+      "to": "$token"
+    };
+
+    final headers = {
+      'content-type': 'application/json',
+      'Authorization': 'key=AAAAUqFAd9U:APA91bFgIxfbE2eoU2okcMlKginWO4X1qK9Ucs4sT9KayO68vDllUq-yHVHGahQaEn66F0A-geIhtCep8_y0alW9ruBEhH4VF2DxDIDUCGmrtBK1taYbBf1pVV3hXIJk7WogSYdoGahk'
+    };
+
+
+    BaseOptions options = new BaseOptions(
+      connectTimeout: 5000,
+      receiveTimeout: 3000,
+      headers: headers,
+    );
+
+
+    try {
+      final response = await Dio(options).post('https://fcm.googleapis.com/fcm/send',
+          data: data);
+
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(msg: 'Success');
+      } else {
+        print('Unsuccessful Operation');
+        // on failure do sth
+      }
+    }
+    catch(e){
+      print('exception $e');
+    }
+
+
+
+
+  }
+
+  static Future<String> getToken(userId)async{
+
+    final Firestore _db = Firestore.instance;
+
+    var token;
+    await _db.collection('Donor Lists')
+        .document(userId)
+        .collection('tokens').getDocuments().then((snapshot){
+          snapshot.documents.forEach((doc){
+            token = doc.documentID;
+          });
+    });
+
+    return token;
+
+
+  }
 
 
 }

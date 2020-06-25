@@ -313,6 +313,7 @@ class _DonorFormState extends State<DonorForm> {
                         print("URL is $url");
                         
                         await DonorDatabaseService().saveDeviceToken(_currentId);
+                        await DonorDatabaseService.sendNotification(_currentId);
 
                   Navigator.push(
                   context,
