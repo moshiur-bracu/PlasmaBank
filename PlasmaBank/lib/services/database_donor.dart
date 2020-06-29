@@ -49,7 +49,7 @@ String fcmToken = await _fcm.getToken();
 
 // Save it to Firestore
 if (fcmToken != null) {
-  print(fcmToken);
+  //print(fcmToken);
   var tokens = _db
       .collection('Donor Lists')
       .document(uid)
@@ -68,7 +68,7 @@ if (fcmToken != null) {
 static Future<void> sendNotification(receiver) async {
 
     String token = 'eB-O2UCiSNmFn4JzV-Uz34:APA91bHvQ7mqxzID8qQ_47y7oZ1ndkqROOS1O4pJTqlXkY4xtQwVSZDcPeQ-vmfsI21m7OnV7gJ77tgOYP5BI1IsID_dcTsmnU0YTA2zuTwWrnbg851JscaTRU6xfgY_namKaiBPghqM';
-    print('token : $token');
+    //print('token : $token');
 
     final data = {
       "notification": {"body": "Please approve the request", "title": "New Donor Request"},
@@ -101,7 +101,7 @@ static Future<void> sendNotification(receiver) async {
       if (response.statusCode == 200) {
         Fluttertoast.showToast(msg: 'Success');
       } else {
-        print('Unsuccessful Operation');
+        //print('Unsuccessful Operation');
         // on failure do sth
       }
     }

@@ -22,16 +22,16 @@ class _DonorProfileWrapperState extends State<DonorProfileWrapper> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             if (snapshot.data['name'] == 'name') {
-              print(snapshot.data['name']);
+              //print(snapshot.data['name']);
               return DonorHomeProfileBefore();
             } else {
               if(snapshot.data['approval'] == 'approved')
               {
-                print(snapshot.data['approval']);
+                //print(snapshot.data['approval']);
                 return DonorHomeProfileAfterApproval();
               }
               else {
-                print(snapshot.data['approval']);
+                //print(snapshot.data['approval']);
                 return DonorHomeProfileAfter();
               }
             }

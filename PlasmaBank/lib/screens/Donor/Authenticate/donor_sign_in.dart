@@ -3,6 +3,7 @@ import 'package:PlasmaBank/services/donor_auth.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:PlasmaBank/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DonorSignIn extends StatefulWidget {
 
@@ -95,6 +96,9 @@ class _DonorSignInState extends State<DonorSignIn> {
                         loading = false;
                         error = 'Could not sign in with those credentials';
                       });
+                    }
+                    else {
+                      Fluttertoast.showToast(msg: 'Sign in successful!');
                     }
                   }
                 },

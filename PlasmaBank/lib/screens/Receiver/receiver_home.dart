@@ -2,6 +2,7 @@ import 'package:PlasmaBank/screens/wrapper.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:PlasmaBank/services/receiver_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ReceiverHome extends StatelessWidget {
 
@@ -34,16 +35,30 @@ class ReceiverHome extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.0),
-              RaisedButton(
-                child: Text('Sign Out'),
+              ButtonTheme(
+              minWidth: 200.0,
+              height: 45.0,
+              buttonColor: kSecondaryColor,
+                          child: RaisedButton(
+                            elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
                 onPressed: () async {
+                  Fluttertoast.showToast(msg: 'Request successful!');
                   await _auth.signOut();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Wrapper()),
                   );
                 },
+                child: Text(
+                  'Complete your request',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  ),
               ),
+            ),
             ],
           ),
           

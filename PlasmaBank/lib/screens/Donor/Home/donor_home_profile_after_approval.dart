@@ -23,10 +23,10 @@ class _DonorHomeProfileAfterApprovalState extends State<DonorHomeProfileAfterApp
         future: _auth.getDatabaseInstance(user.uid),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            print('has data and not null');
-            print(snapshot.data);
+            //print('has data and not null');
+            //print(snapshot.data);
             if (snapshot.data['approval'] == 'approved') {
-              print('approved');
+              //print('approved');
               return Scaffold(
                 body: SingleChildScrollView(
                                   child: Column(

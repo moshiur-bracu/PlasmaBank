@@ -3,6 +3,7 @@ import 'package:PlasmaBank/services/donor_auth.dart';
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:PlasmaBank/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DonorRegister extends StatefulWidget {
 
@@ -96,6 +97,9 @@ class _DonorRegisterState extends State<DonorRegister> {
                         loading = false;
                         error = 'Please supply a valid email';
                       });
+                    }
+                    else {
+                      Fluttertoast.showToast(msg: 'Registration successful!');
                     }
                   }
                 },

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
@@ -70,7 +69,7 @@ class _DonorFormState extends State<DonorForm> {
         setState(() {
           fileName = p.basename(file.path);
         });
-        print(fileName);
+        //print(fileName);
       }
     } on PlatformException catch (e) {
         showDialog(
@@ -284,9 +283,10 @@ class _DonorFormState extends State<DonorForm> {
                       loading = true;
                     });
                   try { 
-                    
+                    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                  _currentId = user.uid;
                     StorageReference storageReference;
-                          if (fileType == 'image') {
+                    if (fileType == 'image') {
                           storageReference = 
                           FirebaseStorage.instance.ref().child("images/Donors/$_currentId/$fileName");
                           }
@@ -295,17 +295,23 @@ class _DonorFormState extends State<DonorForm> {
                               loading = false;
                             });
                             Fluttertoast.showToast(msg: 'Uplaod an image');
-                            Navigator.push(
+                            /*Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => DonorForm()),
-                          );
+                          );*/
                             
                           }
 
                           else {
 
-                            final FirebaseUser user = await FirebaseAuth.instance.currentUser();
-                  _currentId = user.uid;
+                            if(bloodGroup == null) {
+                              bloodGroup = 'A+';
+                            }
+                            if(city == null) {
+                              city = 'Dhaka';
+                            }
+
+                            
                   await DonorDatabaseService(uid: user.uid).updateUserData(
                   name,
                   email,
@@ -325,6 +331,11 @@ class _DonorFormState extends State<DonorForm> {
                     await DonorDatabaseService().saveDeviceToken(_currentId);                   
                     await DonorDatabaseService.sendNotification(_currentId);
 
+                    final StorageUploadTask uploadTask = storageReference.putFile(file);
+                          final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
+                          final String url = (await downloadUrl.ref.getDownloadURL());
+                          //print("URL is $url");
+                  Fluttertoast.showToast(msg: 'Success!');
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DonorHomeProfileAfter()),

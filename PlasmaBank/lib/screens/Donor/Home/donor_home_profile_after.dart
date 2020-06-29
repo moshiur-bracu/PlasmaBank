@@ -1,10 +1,5 @@
 import 'package:PlasmaBank/shared/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:PlasmaBank/screens/Donor/donor_user.dart';
-import 'package:provider/provider.dart';
-import 'package:PlasmaBank/services/donor_auth.dart';
-import 'package:PlasmaBank/screens/Donor/Home/donor_home_profile_after_approval.dart';
-
 
 class DonorHomeProfileAfter extends StatefulWidget {
   @override

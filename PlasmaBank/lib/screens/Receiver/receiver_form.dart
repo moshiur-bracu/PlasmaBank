@@ -1,5 +1,4 @@
 import 'package:PlasmaBank/screens/Receiver/receiver_home.dart';
-import 'package:PlasmaBank/screens/Receiver/receiver_user.dart';
 import 'package:PlasmaBank/screens/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:PlasmaBank/services/database_receiver.dart';
 import 'package:PlasmaBank/shared/loading.dart';
 import 'package:PlasmaBank/services/receiver_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
@@ -54,7 +52,7 @@ class _ReceiverFormState extends State<ReceiverForm> {
         setState(() {
           fileName = p.basename(file.path);
         });
-        print(fileName);
+        //print(fileName);
       }
     } on PlatformException catch (e) {
         showDialog(
@@ -179,7 +177,10 @@ class _ReceiverFormState extends State<ReceiverForm> {
                           });
                           
 
-                          try{StorageReference storageReference;
+                          try{
+                            final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                          _currentId = user.uid;
+                            StorageReference storageReference;
                           if (fileType == 'image') {
                           storageReference = 
                           FirebaseStorage.instance.ref().child("images/Receivers/$_currentId/$fileName");
@@ -189,10 +190,10 @@ class _ReceiverFormState extends State<ReceiverForm> {
                               loading = false;
                             });
                             Fluttertoast.showToast(msg: 'Uplaod an image');
-                            Navigator.push(
+                            /*Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => ReceiverForm()),
-                          );
+                          );*/
                             
                           }
                           else {
@@ -203,19 +204,24 @@ class _ReceiverFormState extends State<ReceiverForm> {
                             setState(() {
                               loading = false;
                             });
-                            print('Error Signinig In');
+                            //print('Error Signinig In');
                           }
                           else {
-                            print('Signed In');
-                            print(result.uid);
+                            //print('Signed In');
+                            //print(result.uid);
+                            if(_currentBloodGroup == null) {
+                              _currentBloodGroup = 'A+';
+                            }
+                            if(_currentCity == null) {
+                              _currentCity = 'Dhaka';
+                            }
                             _currentAccepted = 'false';                          
                           }
-                          final FirebaseUser user = await FirebaseAuth.instance.currentUser();
-                          _currentId = user.uid;
+                          
                           final StorageUploadTask uploadTask = storageReference.putFile(file);
                           final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
                           final String url = (await downloadUrl.ref.getDownloadURL());
-                          print("URL is $url");
+                          //print("URL is $url");
                           await ReceiverDatabaseService(uid: user.uid).updateUserData(
                           _currentId,
                           _currentName,

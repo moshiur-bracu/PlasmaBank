@@ -13,21 +13,29 @@ class _DonorHomeProfileBeforeState extends State<DonorHomeProfileBefore> {
     return Container(
       color: kPrimaryColor,
       child: Center(
-        child: RaisedButton(
-          color: kSecondaryColor,
-          child: Text(
-            'Create New Donor',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-            ),
-          onPressed: () {
+        child: 
+        ButtonTheme(
+              minWidth: 200.0,
+              height: 45.0,
+              buttonColor: kSecondaryColor,
+                          child: RaisedButton(
+                            elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
+                onPressed: () {
             Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DonorForm()),
                   );
           },
-        ),
+                child: Text(
+                  'Create a Donor Account',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  ),
+              ),
+            ),
         ),
     );
   }

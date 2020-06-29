@@ -64,8 +64,16 @@ class DonorHome extends StatelessWidget {
                 icon: Icon(Icons.notifications),
                 onPressed: () {},
                 ),
-              IconButton(
-                icon: Icon(Icons.close),
+              RaisedButton.icon(
+                color: kPrimaryColor,
+                elevation: 0,
+                label: Text(
+                  'Sign Out',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                icon: Icon(Icons.close, color: Colors.white),
                 onPressed: () async {
                   await _auth.signOut();
                       Navigator.push(
@@ -87,7 +95,7 @@ class DonorHome extends StatelessWidget {
             iconSize: 26.0,
             navBarStyle: NavBarStyle.style6, // Choose the nav bar style with this property
             onItemSelected: (index) {
-                print(index);
+                //print(index);
             },
             
           ),      
