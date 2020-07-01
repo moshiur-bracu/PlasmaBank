@@ -1,11 +1,9 @@
 import 'package:PlasmaBank/screens/Donor/Home/receiver_list.dart';
 import 'package:PlasmaBank/shared/constants.dart';
-import 'package:PlasmaBank/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:PlasmaBank/services/database_receiver.dart';
 import 'package:PlasmaBank/screens/Donor/receiver_model.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DonorRequests extends StatefulWidget {
   @override
@@ -21,28 +19,6 @@ class _DonorRequestsState extends State<DonorRequests> {
   String bloodGroup;
   bool searchedItem = true;
   bool search = true;
-
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
-
-  void _onRefresh() async{
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-  }
-
-  void _onLoading() async{
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    //items.add((items.length+1).toString());
-    if(mounted)
-    setState(() {
-
-    });
-    _refreshController.loadComplete();
-  }
 
   @override
   Widget build(BuildContext context) {
